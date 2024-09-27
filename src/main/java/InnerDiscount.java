@@ -1,5 +1,5 @@
 class InnerDiscount extends BaseDiscount {
-    private static InnerDiscount nextDiscount;
+    protected static InnerDiscount nextDiscount;
 
     protected InnerDiscount() {
         super(nextDiscount);
