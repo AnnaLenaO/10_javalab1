@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 class MilkDiscount extends BaseDiscount {
-    public MilkDiscount(Discount nextDiscount) {
+    protected MilkDiscount(Discount nextDiscount) {
         super(nextDiscount);
     }
 
@@ -16,7 +16,7 @@ class MilkDiscount extends BaseDiscount {
     }
 
     @Override
-    public String description(Product product) {
-        return "Milk Discount 5 %";
+    protected String description(Product product) {
+        return "Milk Discount 5 %. ";
     }
 }

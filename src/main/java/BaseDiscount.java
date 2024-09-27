@@ -1,7 +1,7 @@
 abstract class BaseDiscount implements Discount {
     private final Discount nextDiscount;
 
-    public BaseDiscount(Discount nextDiscount) {
+    protected BaseDiscount(Discount nextDiscount) {
         this.nextDiscount = nextDiscount;
     }
 

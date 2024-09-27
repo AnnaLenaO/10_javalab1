@@ -1,21 +1,22 @@
-class QuantityDiscount extends BaseDiscount {
+class InnerDiscount extends BaseDiscount {
+    private static InnerDiscount nextDiscount;
 
-    protected QuantityDiscount(Discount nextDiscount) {
+    protected InnerDiscount() {
         super(nextDiscount);
     }
 
     @Override
     protected boolean isApplicable(Product product) {
-        return product.quantity() >= 5;
+        return false;
     }
 
     @Override
     protected double calculateDiscount(Product product) {
-        return 10;
+        return 0;
     }
 
     @Override
     protected String description(Product product) {
-        return "Quantity Discount 10 SEK for more than 5 products. ";
+        return "";
     }
 }

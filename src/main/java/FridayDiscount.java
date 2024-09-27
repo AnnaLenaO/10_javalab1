@@ -2,7 +2,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 class FridayDiscount extends BaseDiscount {
-    public FridayDiscount(Discount nextDiscount) {
+    protected FridayDiscount(Discount nextDiscount) {
         super(nextDiscount);
     }
 
@@ -18,7 +18,7 @@ class FridayDiscount extends BaseDiscount {
     }
 
     @Override
-    public String description(Product product) {
-        return "Friday Discount 10 %";
+    protected String description(Product product) {
+        return "Friday Discount 10 %. ";
     }
 }

@@ -15,7 +15,7 @@ public class Main {
         checkout.add(product3);
         checkout.add(product4);
 
-        Discount discountChain = new MilkDiscount((new FridayDiscount(new QuantityDiscount(null))));
+        Discount discountChain = new MilkDiscount(new FridayDiscount(new QuantityDiscount(new InnerDiscount())));
 
         checkout.stream().map(product -> {
                     double totalDiscount = discountChain.apply((Product) product);
