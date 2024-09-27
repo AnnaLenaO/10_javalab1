@@ -1,5 +1,5 @@
 abstract class BaseDiscount implements Discount {
-    Discount nextDiscount;
+    private final Discount nextDiscount;
 
     public BaseDiscount(Discount nextDiscount) {
         this.nextDiscount = nextDiscount;
@@ -8,6 +8,8 @@ abstract class BaseDiscount implements Discount {
     protected abstract boolean isApplicable(Product product);
 
     protected abstract double calculateDiscount(Product product);
+
+    protected abstract String description(Product product);
 
     @Override
     public double apply(Product product) {
@@ -29,8 +31,13 @@ abstract class BaseDiscount implements Discount {
     public String getDescription(Product product) {
         String description = "";
 
+        if (isApplicable(product)) {
+            description = description(product);
+        }
+
         if (nextDiscount != null) {
-            description += nextDiscount.getDescription(product);
+            String nextStringDescription = nextDiscount.getDescription(product);
+            description += nextStringDescription;
         }
         return description;
     }

@@ -16,16 +16,7 @@ class MilkDiscount extends BaseDiscount {
     }
 
     @Override
-    public String getDescription(Product product) {
-        String description = "";
-//        return "5 % discount for milk";
-//        String description = "5 % discount for milk";
-//        return description + super.getDescription(product);
-
-        if (isApplicable(product)) {
-            description += "5 % discount for milk. ";
-        }
-        description += super.getDescription(product);
-        return description;
+    public String description(Product product) {
+        return "Milk Discount 5 %";
     }
 }

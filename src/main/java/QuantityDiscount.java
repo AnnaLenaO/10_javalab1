@@ -15,17 +15,8 @@ class QuantityDiscount extends BaseDiscount {
     }
 
     @Override
-    public String getDescription(Product product) {
-        String description = "";
-//        return "10 SEK discount when purchases at least 5 products";
-//        String description = "10 SEK discount when purchases at least 5 products";
-//        return description + super.getDescription(product);
-//
-        if (isApplicable(product)) {
-            description += "10 SEK discount when purchases at least 5 products. ";
-        }
-        description += super.getDescription(product);
-        return description;
+    public String description(Product product) {
+        return "Quantity Discount 10 SEK when more than 5 products";
     }
 }
 
