@@ -31,23 +31,11 @@ public class Main {
                 .forEach(System.out::println);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        GeneralDiscount milkDiscount = new GeneralDiscount(
-                product -> product.name().equals("milk"),
-                product -> product.price() * 0.05,
-                Main::applyMilkDescription
-        );
+        final GeneralDiscount milkDiscount = getMilkDiscount();
 
-        GeneralDiscount fridayDiscount = new GeneralDiscount(
-                Main::testFriday,
-                product -> product.price() * 0.1,
-                Main::applyFridayDescription
-        );
+        final GeneralDiscount fridayDiscount = getFridayDiscount();
 
-        GeneralDiscount quantityDiscount = new GeneralDiscount(
-                product -> product.quantity() > 5,
-                Main::applyQuantityFixedDiscount,
-                Main::applyQuantityDescription
-        );
+        final GeneralDiscount quantityDiscount = getQuantityDiscount();
 
         checkout.stream().map(product -> {
                     double totalDiscount = -milkDiscount.apply((Product) product)
@@ -62,6 +50,30 @@ public class Main {
                             + " SEK total discount");
                 })
                 .forEach(System.out::println);
+    }
+
+    private static GeneralDiscount getQuantityDiscount() {
+        return new GeneralDiscount(
+                product -> product.quantity() > 5,
+                Main::applyQuantityFixedDiscount,
+                Main::applyQuantityDescription
+        );
+    }
+
+    private static GeneralDiscount getFridayDiscount() {
+        return new GeneralDiscount(
+                Main::testFriday,
+                product -> product.price() * product.quantity() * 0.1,
+                Main::applyFridayDescription
+        );
+    }
+
+    protected static GeneralDiscount getMilkDiscount() {
+        return new GeneralDiscount(
+                product -> product.name().equals("milk"),
+                product -> product.price() * product.quantity() * 0.05,
+                Main::applyMilkDescription
+        );
     }
 
     private static String applyMilkDescription(Product product) {
