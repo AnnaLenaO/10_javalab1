@@ -52,15 +52,15 @@ public class Main {
                 .forEach(System.out::println);
     }
 
-    private static GeneralDiscount getQuantityDiscount() {
+    protected static GeneralDiscount getMilkDiscount() {
         return new GeneralDiscount(
-                product -> product.quantity() > 5,
-                Main::applyQuantityFixedDiscount,
-                Main::applyQuantityDescription
+                product -> product.name().equals("milk"),
+                product -> product.price() * product.quantity() * 0.05,
+                Main::applyMilkDescription
         );
     }
 
-    private static GeneralDiscount getFridayDiscount() {
+    protected static GeneralDiscount getFridayDiscount() {
         return new GeneralDiscount(
                 Main::testFriday,
                 product -> product.price() * product.quantity() * 0.1,
@@ -68,11 +68,11 @@ public class Main {
         );
     }
 
-    protected static GeneralDiscount getMilkDiscount() {
+    protected static GeneralDiscount getQuantityDiscount() {
         return new GeneralDiscount(
-                product -> product.name().equals("milk"),
-                product -> product.price() * product.quantity() * 0.05,
-                Main::applyMilkDescription
+                product -> product.quantity() > 5,
+                Main::applyQuantityFixedDiscount,
+                Main::applyQuantityDescription
         );
     }
 
