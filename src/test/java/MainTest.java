@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 class GeneralDiscountTest {
-    private MockedStatic<Main> mockedMain;
 
     @Test
     void testMilkDiscountApply() {
