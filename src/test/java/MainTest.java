@@ -1,8 +1,12 @@
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class GeneralDiscountTest {
+    private MockedStatic<Main> mockedMain;
+
     @Test
     void testMilkDiscountApply() {
 
@@ -101,5 +105,20 @@ class GeneralDiscountTest {
         assertThat(description).isNotEqualTo(
                 "Quantity Discount 10 SEK for more than 5 products. ");
         assertThat(description).isEqualTo("");
+    }
+
+    @Test
+    void testFridayDiscountApply() {
+        Product product = new Product("apple", 15.00, 10);
+        GeneralDiscount fridayDiscount = Main.getFridayDiscount();
+
+        try (MockedStatic<Main> mockedMain = mockStatic(Main.class)) {
+            mockedMain.when(() -> Main.testFriday(product)).thenReturn(true);
+            Double discount = fridayDiscount.apply(product);
+
+            assertThat(fridayDiscount).isNotNull();
+            assertThat(discount).isEqualTo(
+                    15);
+        }
     }
 }

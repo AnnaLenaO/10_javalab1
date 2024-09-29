@@ -88,7 +88,7 @@ public class Main {
         return "Quantity Discount 10 SEK for more than 5 products. ";
     }
 
-    private static boolean testFriday(Product product) {
+    protected static boolean testFriday(Product product) {
         return LocalDate.now().getDayOfWeek().equals(DayOfWeek.FRIDAY);
     }
 
