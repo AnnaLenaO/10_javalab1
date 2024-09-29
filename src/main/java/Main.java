@@ -80,7 +80,7 @@ public class Main {
         return "Milk Discount 5 %. ";
     }
 
-    private static String applyFridayDescription(Product product) {
+    protected static String applyFridayDescription(Product product) {
         return "Friday Discount 10 %. ";
     }
 

@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -108,7 +111,9 @@ class GeneralDiscountTest {
 
     @Test
     void testFridayDiscountApply() {
+
         Product product = new Product("apple", 15.00, 10);
+
         GeneralDiscount fridayDiscount = Main.getFridayDiscount();
 
         try (MockedStatic<Main> mockedMain = mockStatic(Main.class)) {
@@ -118,6 +123,67 @@ class GeneralDiscountTest {
             assertThat(fridayDiscount).isNotNull();
             assertThat(discount).isEqualTo(
                     15);
+        }
+    }
+
+    @Test
+    void testFridayDiscountNotApply() {
+
+        Product product = new Product("apple", 15.00, 10);
+
+        GeneralDiscount fridayDiscount = Main.getFridayDiscount();
+
+        try (MockedStatic<Main> mockedMain = mockStatic(Main.class)) {
+            mockedMain.when(() -> Main.testFriday(product)).thenReturn(false);
+            Double discount = fridayDiscount.apply(product);
+
+            assertThat(fridayDiscount).isNotNull();
+            assertThat(discount).isEqualTo(
+                    0.0);
+        }
+    }
+
+    @Test
+    void testApplyFridayDescription() {
+
+        Product product = new Product("apple", 15.00, 10);
+
+        String description = Main.applyFridayDescription(product);
+
+        assertThat(description).isNotNull();
+        assertThat(description).isEqualTo("Friday Discount 10 %. ");
+    }
+
+    //Not a preferred test but used for debug mocking for testFriday true
+    @Test
+    void testApplyFridayDiscountGetDescription() {
+
+        Product product = new Product("apple", 15.00, 10);
+
+        GeneralDiscount fridayDiscount = Main.getFridayDiscount();
+        String description = fridayDiscount.getDescription(product);
+
+        assertThat(fridayDiscount).isNotNull();
+        if (LocalDate.now().getDayOfWeek().equals(DayOfWeek.FRIDAY)) {
+            assertThat(description).isEqualTo("Friday Discount 10 %. ");
+        }
+        assertThat(description).isEqualTo("");
+    }
+
+    @Test
+    void testFridayDiscountNotGetDescription() {
+
+        Product product = new Product("apple", 15.00, 10);
+
+        GeneralDiscount fridayDiscount = Main.getFridayDiscount();
+
+        try (MockedStatic<Main> mockedMain = mockStatic(Main.class)) {
+            mockedMain.when(() -> Main.testFriday(product)).thenReturn(false);
+            String description = fridayDiscount.getDescription(product);
+
+            assertThat(fridayDiscount).isNotNull();
+            assertThat(description).isEqualTo(
+                    "");
         }
     }
 }
